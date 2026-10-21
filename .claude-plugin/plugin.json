@@ -1,0 +1,18 @@
+{
+  "name": "gilmos",
+  "displayName": "gilmOS",
+  "version": "0.1.4",
+  "description": "Work in gilmOS projects: write screenplays, generate images and videos, edit montage decisions, communicate in team chats and plan production deliveries using the connected user's permissions.",
+  "author": {
+    "name": "Gilm Technologies",
+    "url": "https://app.gilm.ai"
+  },
+  "homepage": "https://app.gilm.ai",
+  "license": "LicenseRef-Proprietary",
+  "keywords": ["film", "screenplay", "storyboard", "assets", "image", "video", "production", "chat", "calendar"],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://app.gilm.ai/help",
+  "supportUrl": "https://app.gilm.ai/help",
+  "privacyPolicyUrl": "https://app.gilm.ai/privacy",
+  "termsOfServiceUrl": "https://app.gilm.ai/terms"
+}

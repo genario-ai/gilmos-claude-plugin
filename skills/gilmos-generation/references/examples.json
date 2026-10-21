@@ -1,0 +1,69 @@
+{
+  "note": "Argument templates only. Replace {{...}} values with accessible project records, actual model choices and an authorized budget before calling. These are not executed production tests.",
+  "examples": [
+    {
+      "purpose": "Discover actual starter-model capabilities",
+      "tool": "gilmos_list_models",
+      "arguments": {}
+    },
+    {
+      "purpose": "Launch one authorized sandbox image with the canonical asset tag and a pinned version",
+      "tool": "gilmos_generate_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{requestId}}",
+        "name": "Scene 3 — the signal",
+        "mediaType": "image",
+        "model": "{{imageModel}}",
+        "prompt": "@ROZ listens for a distant signal at the forest edge, preserving the selected character design.",
+        "aspectRatio": "16:9",
+        "assetVersions": [
+          {
+            "assetId": "{{assetId}}",
+            "versionId": "{{versionId}}"
+          }
+        ]
+      }
+    },
+    {
+      "purpose": "Poll the same queued job; its completion includes image media when available",
+      "tool": "gilmos_get_job",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "jobId": "{{jobId}}",
+        "includePreview": true
+      }
+    },
+    {
+      "purpose": "Refresh an existing item's preview/link without spending generation credits",
+      "tool": "gilmos_get_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "table": "sandbox_items",
+        "id": "{{itemId}}",
+        "includePreview": true
+      }
+    },
+    {
+      "purpose": "Retrieve the still from an existing shot version",
+      "tool": "gilmos_get_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "table": "shot_versions",
+        "id": "{{shotVersionId}}",
+        "variant": "keyframe"
+      }
+    },
+    {
+      "purpose": "Estimate only a reference-free request",
+      "tool": "gilmos_estimate_generation",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "model": "{{imageModel}}",
+        "mediaType": "image",
+        "prompt": "Sunlight through an empty forest, no named asset references.",
+        "aspectRatio": "16:9"
+      }
+    }
+  ]
+}

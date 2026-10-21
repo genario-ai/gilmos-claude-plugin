@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gilmos": {
+      "type": "http",
+      "url": "https://app.gilm.ai/mcp"
+    }
+  }
+}
