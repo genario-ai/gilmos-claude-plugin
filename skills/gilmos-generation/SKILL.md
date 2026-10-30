@@ -28,7 +28,7 @@ The MCP does not expose general audio/3D generation or direct save-to-shot-versi
 
 ## Model and cost
 
-Call `gilmos_list_models` when choosing capabilities or parameters; it explicitly returns a starter catalog, not every configured model. Honor an explicit supported model instead of silently switching. Follow the actual offered schemas and server limits for model options; do not invent provider-specific features.
+Before choosing or submitting a model, call `gilmos_list_models`. It shares the enabled image/video registry with the UI and returns exact `id` values, display names, providers, limits and `supportedTools`. Filter with `mediaType`, `provider`, exact `model`, or `tool` (`generate_media`, `start_asset_image_workflow`, `start_scene_storyboard_workflow`). `includeDeveloperModels=true` also lists enabled reseller entries. Copy the exact `id` into `model`; labels and remembered aliases are not identifiers. Report an unavailable requested model instead of silently switching. Provider access, quotas and credits are checked when executing; discovery does not probe providers. Follow the offered schemas and server limits for model options.
 
 Prices come from gilmOS. `gilmos_estimate_generation` works for reference-free requests; it rejects asset tags, `itemIds` and `assetVersions` because it cannot resolve their costs. Do not remove the user's references to manufacture a quote or present a base estimate as the full cost. When an exact reference-based estimate is required, explain the current limitation and use the existing gilmOS UI estimate if the user can access it.
 

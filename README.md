@@ -1,13 +1,14 @@
-![gilmOS](assets/icon.png)
+![GilmOS](assets/icon.png)
 
-# gilmOS for Claude
+# GilmOS for Claude
 
-Create and develop films in your existing [gilmOS](https://app.gilm.ai) projects from Claude. Write structured screenplays, break scenes into shots, prepare character and location references, generate images and videos, and save montage edit decisions. Read project and workspace chats and send authorized messages or replies as your connected account, plan resource delivery dates, project deadlines, tasks and meetings in the native gilmOS agenda.
+Start a studio workspace or develop films in your existing [GilmOS](https://app.gilm.ai) projects from Claude. Write structured screenplays, break scenes into shots, prepare character and location references, generate images and videos, and save montage edit decisions. Read project and workspace chats and send authorized messages or replies as your connected account, plan resource delivery dates, project deadlines, tasks and meetings in the native GilmOS agenda.
 
 ## What's included
 
 | Skill | Use it to |
 | --- | --- |
+| `gilmos-onboarding` | Understand workspaces and projects, inspect account setup, create a requested first FREE workspace and project |
 | `gilmos-projects` | Connect, find a project, read its production context, manage documents, tasks, statuses and assignments |
 | `gilmos-screenwriting` | Write or revise a screenplay with typed cinematic paragraphs, or run Alfred's long-screenplay and formatting workflows |
 | `gilmos-storyboards` | Prepare scene breakdowns, shot lists and storyboard boards with narrative and visual continuity |
@@ -20,19 +21,19 @@ The plugin also declares one remote MCP server, `gilmos`, at `https://app.gilm.a
 
 ## Setup
 
-1. Install the plugin.
-2. When Claude first uses a gilmOS tool, connect your gilmOS account through the OAuth sign-in window. In Claude Code you can also run `/mcp` and select `gilmos`.
-3. Ask, for example: "List my gilmOS projects and summarize the selected project's next production step."
+1. Install the plugin and add its `gilmos` connector on the plugin's Connectors tab in Claude chat or Cowork.
+2. Connect your GilmOS account through the OAuth sign-in window. In Claude Code, run `/mcp` and select `gilmos` if the connection has not opened automatically.
+3. Ask, for example: "Help me set up my first GilmOS workspace" or "List my GilmOS projects and summarize the selected project's next production step."
 
-You need a gilmOS account. The plugin only reaches projects and conversations your account can already access.
+You need a GilmOS account. Installing the plugin does not itself create a workspace or project. The plugin only reaches projects and conversations your account can already access.
 
 ## Data and network behavior
 
-- **Single destination**: all tool calls go to the gilmOS MCP server at `https://app.gilm.ai/mcp`, operated by Gilm Technologies. The plugin bundles no local code, scripts or hooks.
-- **Authentication**: OAuth 2.1 through the gilmOS identity provider (Supabase Auth). Tokens are stored by the Claude client; the plugin contains no credentials.
-- **Permissions**: every tool acts with the connected user's gilmOS permissions, including private conversations the user is a member of.
-- **Writes**: tools can create or update screenplays, scenes, shots, assets, montage documents, tasks, calendar events and chat messages in gilmOS when you ask for it. Messages are sent as your account and labelled "via MCP". Selected participants may receive gilmOS invitations and notifications.
-- **Credits**: image/video generations and Alfred writing workflows consume your existing gilmOS credits.
+- **Single destination**: all tool calls go to the GilmOS MCP server at `https://app.gilm.ai/mcp`, operated by Gilm Technologies. The plugin bundles no local code, scripts or hooks.
+- **Authentication**: OAuth through the GilmOS identity provider (Supabase Auth). Tokens are stored by the Claude client; the plugin contains no credentials.
+- **Permissions**: every tool acts with the connected user's GilmOS permissions, including private conversations the user is a member of.
+- **Writes**: on request, tools can create a workspace or project, or create and update screenplays, scenes, shots, assets, montage documents, tasks, calendar events and chat messages in GilmOS. Messages are sent as your account and labelled "via MCP". Selected participants may receive GilmOS invitations and notifications.
+- **Credits**: image/video generations and Alfred writing workflows consume your existing GilmOS credits. Creating a workspace or project does not supply generation credits.
 - **Limits**: montage tools save edit decisions; rendering or exporting a finished video is not available through this plugin.
 
 ## Support and policies

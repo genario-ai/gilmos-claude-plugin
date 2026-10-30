@@ -7,6 +7,8 @@ description: "Connect to gilmOS, find an accessible project, inspect its product
 
 Use the connected `gilmos_*` MCP tools. Preserve the user's language, current objective and already authorized actions. An installed plugin does not grant access until OAuth succeeds; use the host's connection flow with `https://app.gilm.ai/mcp`. Credentials remain in the client and Supabase.
 
+If the account has no workspace/project, or the person asks how to begin, use [the setup skill](../gilmos-onboarding/SKILL.md) and `gilmos_get_onboarding`. Do not leave a new account at an empty project list or treat `profiles.org_id` as workspace ownership.
+
 ## Establish the context
 
 1. Call `gilmos_list_projects` when the project/workspace is not established. Match the requested names to accessible records and keep the returned project UUID. Ask only if the match is genuinely ambiguous.

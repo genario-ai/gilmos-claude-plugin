@@ -1,14 +1,14 @@
 {
   "name": "gilmos",
-  "displayName": "gilmOS",
-  "version": "0.1.4",
-  "description": "Work in gilmOS projects: write screenplays, generate images and videos, edit montage decisions, communicate in team chats and plan production deliveries using the connected user's permissions.",
+  "displayName": "GilmOS",
+  "version": "0.1.5",
+  "description": "Start and manage GilmOS productions from Claude: workspaces, screenplays, storyboards, assets, media generation, montage and team planning.",
   "author": {
     "name": "Gilm Technologies",
     "url": "https://app.gilm.ai"
   },
   "homepage": "https://app.gilm.ai",
-  "license": "LicenseRef-Proprietary",
+  "repository": "https://github.com/genario-ai/gilmos-claude-plugin",
   "keywords": ["film", "screenplay", "storyboard", "assets", "image", "video", "production", "chat", "calendar"],
   "icon": "./assets/icon.png",
   "documentationUrl": "https://app.gilm.ai/help",
