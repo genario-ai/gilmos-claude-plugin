@@ -1,0 +1,14 @@
+{
+  "name": "gilmos-marketplace",
+  "description": "GilmOS tools and workflows for Claude",
+  "owner": {
+    "name": "Gilm Technologies"
+  },
+  "plugins": [
+    {
+      "name": "gilmos",
+      "source": "./",
+      "description": "Manage film productions, generate media and collaborate in GilmOS through Claude."
+    }
+  ]
+}

@@ -21,11 +21,14 @@ The plugin also declares one remote MCP server, `gilmos`, at `https://app.gilm.a
 
 ## Setup
 
-1. Install the plugin and add its `gilmos` connector on the plugin's Connectors tab in Claude chat or Cowork.
+1. In Claude's **Customize → Plugins → Add plugin → Add marketplace**, add `genario-ai/gilmos-claude-plugin`, then add the `gilmos` plugin. In Claude Code, run `claude plugin marketplace add genario-ai/gilmos-claude-plugin` followed by `claude plugin install gilmos@gilmos-marketplace`.
+   You can also upload an archive of this plugin in **Customize → Plugins → Add plugin → Upload plugin**.
 2. Connect your GilmOS account through the OAuth sign-in window. In Claude Code, run `/mcp` and select `gilmos` if the connection has not opened automatically.
 3. Ask, for example: "Help me set up my first GilmOS workspace" or "List my GilmOS projects and summarize the selected project's next production step."
 
 You need a GilmOS account. Installing the plugin does not itself create a workspace or project. The plugin only reaches projects and conversations your account can already access.
+
+This repository is an independent GitHub marketplace. The full GilmOS connector is not listed in Anthropic's official directory because that directory currently excludes standalone AI image, video and audio generation tools.
 
 ## Data and network behavior
 
