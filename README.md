@@ -38,13 +38,14 @@ This repository is an independent GitHub marketplace, not an Anthropic-approved 
 
 ## Media: viewing, references and uploads
 
-Claude and GPT use the same GilmOS MCP server and tools. The plugin packages and the hosts' file/display capabilities differ. `gilmos_import_media` imports existing images, videos and audio into the global project Sandbox without generation or generation credits. It accepts a direct HTTPS file URL up to 100 MiB, or actual standard-base64 file bytes up to 30 MiB decoded. A conversation attachment or local path does not automatically supply those bytes to the remote connector.
+Claude and GPT use the same GilmOS MCP server and tools. The plugin packages and the hosts' file/display capabilities differ. `gilmos_import_media` imports existing images, videos and audio into the global project Sandbox without generation or generation credits. Prefer `gilmos_create_upload_url` to reserve a private, write-only URL valid for 2 hours, send the original bytes by raw HTTP PUT (100 MiB max), then finalize with `gilmos_import_media` and `source:{kind:"upload",uploadId}` using the returned `requestId` and same name. Never send your GilmOS bearer token to storage or transcribe large base64 through the model. Temporary uploads are cleaned after expiry. Direct HTTPS URLs (100 MiB) and programmatically supplied base64 (30 MiB decoded) remain available. A conversation attachment or local path does not automatically supply those bytes to the remote connector.
 
 | Need | Supported path |
 | --- | --- |
 | Inspect an existing GilmOS image | `gilmos_get_media` returns an image preview and a temporary original link; display depends on the Claude client |
 | Retrieve a GilmOS video or audio | `gilmos_get_media` returns a temporary original link; inline playback depends on the Claude client |
 | Import a public image as an asset reference | `gilmos_import_asset_references` accepts up to 40 `{assetId,imageUrl}` entries in `payload.references`; inspect imported versions and failures |
+| Privately upload original files without putting bytes in model arguments | `gilmos_create_upload_url`, raw HTTP PUT using the returned method/headers, then `gilmos_import_media` with `source:{kind:"upload",uploadId}`; 100 MiB per file |
 | Import an existing image, video or audio | `gilmos_import_media` with `source:{kind:"url",url:"https://…"}`; direct file URL, including an authorized temporary signed URL accessible without browser cookies |
 | Import file bytes available to the host | `gilmos_import_media` with `source:{kind:"base64",data:"…"}`; actual standard base64, no `data:` prefix, up to 30 MiB decoded |
 | Use a local file or Claude attachment unavailable to the host's tools | Upload the original in GilmOS first, then read its saved item/version ID through MCP |
@@ -58,7 +59,7 @@ These are separate boundaries: the [MCP tool-result specification](https://model
 
 ## Data and network behavior
 
-- **Single destination**: all tool calls go to the GilmOS MCP server at `https://app.gilm.ai/mcp`, operated by Gilm Technologies. The plugin bundles no local code, scripts or hooks.
+- **Destinations**: MCP calls go to `https://app.gilm.ai/mcp`, operated by Gilm Technologies. Direct binary uploads use the returned signed URL on GilmOS Storage (`https://base.gilm.ai/storage/v1/`); this grants a temporary write to one private staging object, without sending the account bearer token. The plugin bundles no local code, scripts or hooks.
 - **Authentication**: OAuth through the GilmOS identity provider (Supabase Auth). Tokens are stored by the Claude client; the plugin contains no credentials.
 - **Permissions**: every tool acts with the connected user's GilmOS permissions, including private conversations the user is a member of.
 - **Writes**: on request, tools can create a workspace or project, or create and update screenplays, scenes, shots, assets, montage documents, tasks, calendar events and chat messages in GilmOS. Messages are sent as your account and labelled "via MCP". Selected participants may receive GilmOS invitations and notifications.
