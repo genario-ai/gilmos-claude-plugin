@@ -1,7 +1,7 @@
 {
   "name": "gilmos",
   "displayName": "GilmOS",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "description": "Start and manage GilmOS productions from Claude: workspaces, screenplays, storyboards, assets, media generation, montage and team planning.",
   "author": {
     "name": "Gilm Technologies",
@@ -9,7 +9,17 @@
   },
   "homepage": "https://app.gilm.ai",
   "repository": "https://github.com/genario-ai/gilmos-claude-plugin",
-  "keywords": ["film", "screenplay", "storyboard", "assets", "image", "video", "production", "chat", "calendar"],
+  "keywords": [
+    "film",
+    "screenplay",
+    "storyboard",
+    "assets",
+    "image",
+    "video",
+    "production",
+    "chat",
+    "calendar"
+  ],
   "icon": "./assets/icon.png",
   "documentationUrl": "https://app.gilm.ai/help",
   "supportUrl": "https://app.gilm.ai/help",

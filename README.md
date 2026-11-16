@@ -21,6 +21,12 @@ The plugin also declares one remote MCP server, `gilmos`, at `https://app.gilm.a
 
 ## Setup
 
+### Connect without a marketplace listing
+
+In Claude, open **Customize → Connectors → Add custom connector**, name it **GilmOS** and enter `https://app.gilm.ai/mcp`. Complete the OAuth sign-in and consent in your own GilmOS account. If Claude asks how to register its OAuth client, use **Register automatically**. Organization accounts may require an owner to add the connector first. This connects the tools without installing the plugin's skills or waiting for an official directory listing. See [Claude's custom connector instructions](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+
+### Add the workflow skills
+
 1. In Claude's **Customize → Plugins → Add plugin → Add marketplace**, add `genario-ai/gilmos-claude-plugin`, then add the `gilmos` plugin. In Claude Code, run `claude plugin marketplace add genario-ai/gilmos-claude-plugin` followed by `claude plugin install gilmos@gilmos-marketplace`.
    You can also upload an archive of this plugin in **Customize → Plugins → Add plugin → Upload plugin**.
 2. Connect your GilmOS account through the OAuth sign-in window. In Claude Code, run `/mcp` and select `gilmos` if the connection has not opened automatically.
@@ -28,7 +34,27 @@ The plugin also declares one remote MCP server, `gilmos`, at `https://app.gilm.a
 
 You need a GilmOS account. Installing the plugin does not itself create a workspace or project. The plugin only reaches projects and conversations your account can already access.
 
-This repository is an independent GitHub marketplace. The full GilmOS connector is not listed in Anthropic's official directory because that directory currently excludes standalone AI image, video and audio generation tools.
+This repository is an independent GitHub marketplace, not an Anthropic-approved listing. As of November 16, 2026, the publisher reports that official acceptance is still pending; this package does not establish the review outcome or its reason. Anthropic's [Software Directory Policy](https://support.claude.com/en/articles/13145358-anthropic-software-directory-policy) currently excludes standalone AI image, video and audio generation, with a limited exception for design-only image workflows. The full GilmOS generation offering therefore faces an eligibility restriction; installing it independently does not imply official approval.
+
+## Media: viewing, references and uploads
+
+Claude and GPT use the same GilmOS MCP server and tools. The plugin packages and the hosts' file/display capabilities differ. `gilmos_import_media` imports existing images, videos and audio into the global project Sandbox without generation or generation credits. It accepts a direct HTTPS file URL up to 100 MiB, or actual standard-base64 file bytes up to 30 MiB decoded. A conversation attachment or local path does not automatically supply those bytes to the remote connector.
+
+| Need | Supported path |
+| --- | --- |
+| Inspect an existing GilmOS image | `gilmos_get_media` returns an image preview and a temporary original link; display depends on the Claude client |
+| Retrieve a GilmOS video or audio | `gilmos_get_media` returns a temporary original link; inline playback depends on the Claude client |
+| Import a public image as an asset reference | `gilmos_import_asset_references` accepts up to 40 `{assetId,imageUrl}` entries in `payload.references`; inspect imported versions and failures |
+| Import an existing image, video or audio | `gilmos_import_media` with `source:{kind:"url",url:"https://…"}`; direct file URL, including an authorized temporary signed URL accessible without browser cookies |
+| Import file bytes available to the host | `gilmos_import_media` with `source:{kind:"base64",data:"…"}`; actual standard base64, no `data:` prefix, up to 30 MiB decoded |
+| Use a local file or Claude attachment unavailable to the host's tools | Upload the original in GilmOS first, then read its saved item/version ID through MCP |
+| Use a stored reference for generation | Pass accessible `itemIds` or `assetVersions`, and exact asset tags; `gilmos_generate_media` does not accept external URLs |
+
+For `gilmos_import_media`, supply `projectId`, `name` and a fresh UUID `requestId`. Reuse that UUID and identical arguments on retry. Optional `sha256` verifies the bytes. The result confirms the saved `itemId`, detected type/MIME, size and checksum; inspect it with `gilmos_get_media`, and use that ID in `itemIds` for later generation. Accepted formats: JPEG, PNG, WebP, GIF, AVIF, MP4, MOV, WebM, MP3, WAV, OGG (Vorbis/Opus), FLAC, M4A and AAC. Project editor permission is required. This tool saves Sandbox items, not asset/shot versions.
+
+For public-image-to-asset import, provide a direct image URL reachable by the GilmOS server without browser cookies. A web page, `file://` path, Claude attachment identifier or Claude sandbox path is not such a URL. This separate import creates asset versions. Do not make a private file public or invent base64/URLs. After an import or manual upload, verify the saved record and use `gilmos_get_media` to inspect it; do not infer a successful transfer from a displayed attachment.
+
+These are separate boundaries: the [MCP tool-result specification](https://modelcontextprotocol.io/specification/2025-06-18/server/tools) supports images and resource links, while Anthropic's directory policy restricts querying or extracting Claude user-uploaded files. Neither is evidence that MCP universally forbids media.
 
 ## Data and network behavior
 

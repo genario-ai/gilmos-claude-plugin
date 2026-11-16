@@ -11,6 +11,7 @@ Use the connected user's project, permissions and credits. Resolve the relevant 
 
 | Request | Operation and saved destination |
 | --- | --- |
+| Import existing image/video/audio | `gilmos_import_media`; global project sandbox |
 | Display existing image/video/audio | `gilmos_get_media`; no generation |
 | Free image/video, next-shot illustration, variant | `gilmos_generate_media`; global project sandbox |
 | Image references for selected asset records | `gilmos_start_asset_image_workflow`; new asset versions |
@@ -18,6 +19,12 @@ Use the connected user's project, permissions and credits. Resolve the relevant 
 | Technical breakdown / scene storyboard boards | `gilmos_start_scene_storyboard_workflow`; scene versions |
 
 The MCP does not expose general audio/3D generation or direct save-to-shot-version for a free generation. Do not imply an unsupported destination. Recipe and asset/storyboard workflows have their own lifecycle; this skill's `get_job` loop applies to free generation.
+
+## Import existing media
+
+Use `gilmos_import_media` for existing images, videos or audio: `source={kind:"url",url:"https://…"}` imports a direct file up to 100 MiB, including an authorized temporary signed URL reachable without browser cookies; `source={kind:"base64",data:"…"}` accepts actual standard-base64 file bytes up to 30 MiB decoded, without a `data:` prefix. Supply `projectId`, `name` and a new UUID `requestId`; reuse identical arguments and that UUID on retry. An optional `sha256` verifies the source. The tool saves one global Sandbox item without generation, returns its `itemId`, detected MIME, size and checksum, and rejects unsupported files. Inspect it with `gilmos_get_media`, then use its `itemId` in generation references. It does not create an asset or shot version.
+
+An attachment shown in the conversation is not automatically accessible to the connector. Use file bytes or a direct URL only if the host can actually supply them within the user’s request; never invent base64, attachment URLs or access to local/host sandbox paths. If the host cannot supply the original, have the user upload it in gilmOS and retrieve its saved ID. For public-image imports directly into asset versions, use the assets skill.
 
 ## Resolve references before launching
 

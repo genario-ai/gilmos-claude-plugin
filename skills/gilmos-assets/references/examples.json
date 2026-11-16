@@ -2,6 +2,21 @@
   "note": "Argument templates only. Replace {{...}} values with accessible project records, actual model choices and an authorized budget before calling. These are not executed production tests.",
   "examples": [
     {
+      "purpose": "Import a user-supplied direct public image URL as an asset version; inspect imported and failures",
+      "tool": "gilmos_import_asset_references",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "payload": {
+          "references": [
+            {
+              "assetId": "{{assetId}}",
+              "imageUrl": "{{publicImageUrl}}"
+            }
+          ]
+        }
+      }
+    },
+    {
       "purpose": "Create one asset record, without generating an image",
       "tool": "gilmos_create_assets",
       "arguments": {
