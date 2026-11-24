@@ -100,6 +100,118 @@
         "prompt": "Sunlight through an empty forest, no named asset references.",
         "aspectRatio": "16:9"
       }
+    },
+    {
+      "purpose": "Create one authorized Seedance 2.5 draft at 480p",
+      "tool": "gilmos_create_seedance_draft",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{draftRequestId}}",
+        "name": "Seedance draft — take 1",
+        "prompt": "A slow camera move across an empty forest at dawn.",
+        "duration": 5,
+        "aspectRatio": "16:9"
+      }
+    },
+    {
+      "purpose": "Estimate the selected draft finalization using its saved recipe",
+      "tool": "gilmos_estimate_generation",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "model": "dreamina-seedance-2-5-260628",
+        "mediaType": "video",
+        "resolution": "4K",
+        "modelOptions": {
+          "byteplusDraftSourceItemId": "{{draftItemId}}"
+        }
+      }
+    },
+    {
+      "purpose": "Finalize only the selected completed draft at the requested resolution",
+      "tool": "gilmos_finalize_seedance_draft",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{finalRequestId}}",
+        "draftItemId": "{{draftItemId}}",
+        "resolution": "4K",
+        "name": "Seedance selected final"
+      }
+    },
+    {
+      "purpose": "Read the final job and its temporary video download link",
+      "tool": "gilmos_get_job",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "jobId": "{{finalRequestId}}"
+      }
+    },
+    {
+      "purpose": "Refresh the final video download link by its final item ID",
+      "tool": "gilmos_get_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "id": "{{finalRequestId}}",
+        "includePreview": false
+      }
+    },
+    {
+      "purpose": "Apply LTX 2.5 Alpha Gen to one authorized stored source video",
+      "tool": "gilmos_generate_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{requestId}}",
+        "name": "LTX 2.5 Alpha Gen",
+        "mediaType": "video",
+        "model": "lightricks/ltx-2.5/alpha-gen",
+        "itemIds": [
+          "{{itemId}}"
+        ]
+      }
+    },
+    {
+      "purpose": "Apply LTX 2.5 Reframe to one authorized stored source video",
+      "tool": "gilmos_generate_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{requestId}}",
+        "name": "LTX 2.5 Reframe",
+        "mediaType": "video",
+        "model": "lightricks/ltx-2.5/reframe",
+        "itemIds": [
+          "{{itemId}}"
+        ],
+        "aspectRatio": "9:16",
+        "resolution": "1080p"
+      }
+    },
+    {
+      "purpose": "Apply LTX 2.5 SDR to HDR to one authorized stored source video",
+      "tool": "gilmos_generate_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{requestId}}",
+        "name": "LTX 2.5 SDR to HDR",
+        "mediaType": "video",
+        "model": "lightricks/ltx-2.5/hdr",
+        "itemIds": [
+          "{{itemId}}"
+        ]
+      }
+    },
+    {
+      "purpose": "Apply LTX 2.5 Upscale to one authorized stored source video",
+      "tool": "gilmos_generate_media",
+      "arguments": {
+        "projectId": "{{projectId}}",
+        "requestId": "{{requestId}}",
+        "name": "LTX 2.5 Upscale",
+        "mediaType": "video",
+        "model": "lightricks/ltx-2.5/upscale",
+        "itemIds": [
+          "{{itemId}}"
+        ],
+        "resolution": "4k"
+      }
     }
   ]
 }

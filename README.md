@@ -8,7 +8,7 @@ Start a studio workspace or develop films in your existing [GilmOS](https://app.
 
 | Skill | Use it to |
 | --- | --- |
-| `gilmos-onboarding` | Understand workspaces and projects, inspect account setup, create a requested first FREE workspace and project |
+| `gilmos-onboarding` | Understand workspaces and projects, inspect account setup, create a requested first workspace and project |
 | `gilmos-projects` | Connect, find a project, read its production context, manage documents, tasks, statuses and assignments |
 | `gilmos-screenwriting` | Write or revise a screenplay with typed cinematic paragraphs, or run Alfred's long-screenplay and formatting workflows |
 | `gilmos-storyboards` | Prepare scene breakdowns, shot lists and storyboard boards with narrative and visual continuity |
@@ -18,6 +18,12 @@ Start a studio workspace or develop films in your existing [GilmOS](https://app.
 | `gilmos-collaboration` | Read and send project/workspace chat messages and plan production in the agenda |
 
 The plugin also declares one remote MCP server, `gilmos`, at `https://app.gilm.ai/mcp`, which provides the `gilmos_*` tools the skills use.
+
+## Video workflows
+
+Create Seedance 2.5 drafts in 480p with `gilmos_create_seedance_draft`, then finalize each selected take in 1080p or 4K with `gilmos_finalize_seedance_draft`. Follow the returned job, retrieve its final-video link and refresh expired links through `gilmos_get_media`. Draft creation and finalization each consume generation credits.
+
+LTX 2.5 supports Alpha Gen, Reframe, SDR to HDR and Upscale through `gilmos_generate_media`, with one stored source video. Discover the current options and compositing files from the model catalog and completed media.
 
 ## Setup
 

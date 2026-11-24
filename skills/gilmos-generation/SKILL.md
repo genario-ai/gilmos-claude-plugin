@@ -49,6 +49,19 @@ After `gilmos_generate_media`, inspect `assetReferences` (correct asset/version)
 
 Poll `gilmos_get_job` with paced checks appropriate to the task. `queued`/`running` means work in progress, not a finished image. On `failed` or `cancelled`, inspect the cause; do not silently launch more billable work. If the session cannot wait, report the actual job state and identifier for later retrieval. `gilmos_cancel_job` requires project-admin permission and cannot promise a refund for submitted provider work.
 
+## LTX 2.5 and Kling video processing
+
+Discover each exact model and its `videoParameters` with `gilmos_list_models`. LTX 2.5 Alpha Gen, Reframe, SDR to HDR and Upscale take exactly one source video in `itemIds`. Their prompt can be omitted. Follow `gilmos_get_job`, then `gilmos_get_media` for the original file and any `media.companion` compositing output. A companion marked `temporaryProviderLink` uses the provider's retention.
+
+For Kling 4.0, use the catalog's resolutions and `modelOptions.dynamic_range` (`sdr` or `hdr`) and workflow. Obtain costs from the server for the selected resolution, range and source media.
+
+## Seedance 2.5 drafts
+
+1. Call `gilmos_create_seedance_draft` with the project, a new request UUID, name, prompt and any selected references. It creates a 480p draft. Keep its Sandbox `itemId` and poll `gilmos_get_job` for its preview.
+2. For each draft the user selects, estimate the final with `gilmos_estimate_generation` using the standard Seedance model ID, video, the target resolution and `modelOptions.byteplusDraftSourceItemId`. The server uses the saved recipe.
+3. Call `gilmos_finalize_seedance_draft` with `projectId`, the chosen `draftItemId`, a fresh `requestId` and `resolution` (`1080p` or `4K`). Retry with the same arguments. Drafts and finals consume credits separately.
+4. Poll the **final** job with `gilmos_get_job`. Return `media.url` and `media.expiresAt` from the completed job. Refresh the link via `gilmos_get_media` with its **final itemId** and `includePreview=false`.
+
 ## Show the result
 
 Completed free-generation jobs return native image content plus a temporary original-file link. Render the returned image content using the host's media display support. For existing media, or a missing/expired preview, call `gilmos_get_media` with the accessible item/version ID. It retrieves media without generating again.
