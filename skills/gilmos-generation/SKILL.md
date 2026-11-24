@@ -41,6 +41,8 @@ Before choosing or submitting a model, call `gilmos_list_models`. It shares the 
 
 Prices come from gilmOS. `gilmos_estimate_generation` works for reference-free requests; it rejects asset tags, `itemIds` and `assetVersions` because it cannot resolve their costs. Do not remove the user's references to manufacture a quote or present a base estimate as the full cost. When an exact reference-based estimate is required, explain the current limitation and use the existing gilmOS UI estimate if the user can access it.
 
+Show `gilmos_get_credits` for the project’s workspace before rendering. Pass `estimatedCost` from the GilmOS customer quote when available. For a credit rejection, show the card again using the rejected estimate and explain the shortfall. After a recharge, verify the live balance. Use a fresh requestId for a user-requested new attempt after a confirmed terminal credit rejection; retain the original ID if submission was uncertain.
+
 ## Submission, completion and retries
 
 Read [examples.json](references/examples.json) for exact argument templates. Use a new UUID `requestId` for each distinct requested output. Preserve that UUID and all original arguments on a retry of the same generation; a changed UUID can charge and create a second output.

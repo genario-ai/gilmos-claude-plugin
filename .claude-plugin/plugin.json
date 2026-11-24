@@ -1,7 +1,7 @@
 {
   "name": "gilmos",
   "displayName": "GilmOS",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Start and manage GilmOS productions from Claude: workspaces, screenplays, storyboards, assets, media generation, montage and team planning.",
   "author": {
     "name": "Gilm Technologies",
